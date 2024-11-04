@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Best practices" id="Best-practices">
+
+    <p>
+        Telegram Mini Apps are WebViews, as such they only have access to a limited part of devices memory and resources.
+
+    </p>
+    <list>
+        <li>Games should be small (10 to 20Mb)</li>
+        <li>Games shouldn't expect WebGL 2023 to be available</li>
+        <li>Games can't expect more than 500Mb of RAM</li>
+    </list>
+
+</topic>

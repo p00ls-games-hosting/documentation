@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Deployment and hosting" id="Deploy">
+
+    <chapter title="Assets and compression" id="assets-and-compression">
+
+        <p>
+            For every files below 60Mb, we'll take care of compression automatically.
+        </p>
+        <p>
+            Above 60Mb, games should compress their assets, and suffix them accordingly (i.e: <code>assets.data.gzip</code>
+            Brotli might not be available in every Telegram clients, so gzip is the favored option.
+        </p>
+
+    </chapter>
+</topic>

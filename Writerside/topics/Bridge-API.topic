@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Bridge API" id="Bridge-API">
+    <show-structure depth="2"/>
+    <p>The SDK API is defined into on interface :
+        <a href="https://github.com/p00ls-games-hosting/unity-bridge/blob/main/io.p00ls.games/Runtime/Bridge.cs">Runtime/Bridge.cs</a>
+        , but here is a more detailed explanation.
+        Most methods are asynchronous, and accepts callbacks
+    </p>
+    <chapter title="Authentication" id="authentication">
+        The SDKs authenticate automatically the player through the telegram implicit auth, so you have nothing to do on
+        your end.
+        On top of that, the sdk provides some useful methods:
+
+        <deflist type="full">
+            <def title="GetUserProfile()" id="get-user-profile">
+                This method returns the user profile, as a <code>UserProfile</code> object.
+                <code-block lang="c#">
+                    public class UserProfile
+                    {
+                        public string userId;
+                        public string firstName;
+                        public string username;
+                        public bool isPremium;
+                        public string game;
+                        public string? referrer;
+                    }
+                </code-block>
+                <p>
+                    On telegram, only the <code>firstName</code> is mandatory information, so everything but <code>userId</code>,
+                    <code>firstName</code> and
+                    <code>game</code> can be null.
+
+                </p>
+                <p>
+                    <code>game</code> is the internal identifier of your game.
+                </p>
+                <p>
+                    <code>referrer</code> is only present if the user was referred by another user.
+                    Check <a href="#referral">referral section to know more.</a>
+                </p>
+            </def>
+            <def title="GetIdToken(Action<string> callback)" id="get-id-token">
+                Should you need to make direct REST api calls to P00LS games API, this method will invoke the callback
+                with a jwt token to use to authenticate your requests on behalf of the user
+            </def>
+        </deflist>
+    </chapter>
+    <chapter title="Game State" id="game-state">
+        <deflist type="full">
+            <def title="SaveUserData(object data)" id="saveuserdata-object-data">
+                Saves an arbitrary object to the user's data.
+                This data is persisted across sessions, and is available on any device the user logs in.
+                <p>Objects passed to this method should be serializable.</p>
+                <p>The sdk automatically conflates calls to this method, so it is safe to call it several times per
+                    seconds.</p>
+            </def>
+            <def title="GetUserData<T>(Action<T> callback)" id="getuserdata-t-action-t-callback">
+                Retrieves the user data saved with <code>SaveUserData</code>.
+                <p>The callback will be invoked with the saved data, or null if no data was saved so far.</p>
+                <p>
+                    <code>T</code> should be the type of the object saved with <code>SaveUserData</code>, and should be
+                    serializable.
+                </p>
+            </def>
+            <def title="SavePartData(string docKey, object data" id="savepartdata-string-dockey-object-data">
+                Saves an arbitrary object linked to a key.
+                This data is also persisted across sessions, and is available on any device the user logs in.
+                <p>Objects passed to this method should be serializable.</p>
+
+            </def>
+            <def title="ReadPartData<T>(string docKey, Action<T> callback"
+                 id="readpartdata-t-string-dockkey-action-t-callback">
+                Retrieves the data saved with <code>SavePartData</code> under <code>docKey</code>.
+                <p>The callback will be invoked with the saved data, or null if no data was saved so far.</p>
+                <p><code>T</code> should be the type of the object saved with <code>SaveUserData</code>, and should be
+                    serializable.</p>
+            </def>
+        </deflist>
+    </chapter>
+    <chapter title="Referral" id="referral">
+        Players can invite other players to the game, and get rewarded for it.
+        P00LS games sdk provides the referral link generation, as long as referrer / referee tracking, but it's on the
+        game developer to define the rewards.
+        <p>Typically, game developers should check if a player is a new player, and if he was referred by another
+            player, and reward both players accordingly.</p>
+
+        <code>UserProfile</code> object has a <code>referrer</code> field, that is only present if the user was referred
+        by another user, which is the most basic way to check if a player was referred.
+
+        <deflist>
+            <def title="GetReferralLink(Action<string> callback)" id="getreferrallink-action-string-callback">
+                Generates a referral link for the current user and game.
+                The callback will be invoked with the generated link.
+                The link is always the same after the initial call.
+            </def>
+            <def title="GetReferrer(Action<Referrer> callback" id="getreferrer-action-referrer-callback">
+                Get referrer minimal information if present, null otherwise.
+                <code-block lang="c#">
+                    public class Referrer
+                    {
+                        public string firstName;
+                    }
+                </code-block>
+            </def>
+            <def title="GetReferees(GetRefereesRequest request, Action<GetRefereesResult> callback)"
+                 id="getreferees-getrefereesrequest-request-action-getrefereesresult-callback">
+                List all referees of the current user.
+                <p>
+                    <code>next</code> is a pagination token, that can be passed to the next call to get the next page of
+                    results.
+                    <code>next</code> will be null when there are no more results.
+                </p>
+                <p><code>pageSize</code> can be specified during first call, and defaults to 10, max to 25.</p>
+                <code-block lang="c#">
+                    public class GetRefereesRequest
+                    {
+                        public string next;
+                        public int pageSize;
+                    }
+
+                    public class GetRefereesResult
+                    {
+                        public string next;
+                        public int total;
+                        <![CDATA[public List<Referee> referees]]>;
+                    }
+
+                    public class Referee
+                    {
+                        public string firstName;
+                        public DateTime createdAt;
+                    }
+                </code-block>
+            </def>
+        </deflist>
+    </chapter>
+    <chapter title="In-app purchases" id="in-app-purchases">
+        Players can buy either items or virtual currency in your game.
+        <p>
+            It is your responsibility to define item ids.
+            Title, description and currency name are for display purposes only, and can be changed at any time.
+        </p>
+        <code-block lang="c#">
+            public abstract class PurchaseParams
+            {
+                public int price;
+                public int quantity;
+            }
+
+            [Serializable]
+            public class PurchaseItemParams : PurchaseParams
+            {
+                public string itemId;
+                public string title;
+                public string description;
+            }
+
+            [Serializable]
+            public class PurchaseCurrencyParams: PurchaseParams
+            {
+                public string symbol;
+                public string name;
+            }
+        </code-block>
+        <deflist>
+            <def title="event Action<PurchaseResult> OnPurchase" id="event-action-purchaseresult-onpurchase">
+                Register your global callback to be notified of invoices status.
+                <code-block lang="c#">
+                    [Serializable]
+                    public class PurchaseResult
+                    {
+                        public string paymentId;
+                        public PurchaseParams purchaseParams;
+                        public string status;
+                    }
+                </code-block>
+                <p><code>status</code> can be one of <code>paid</code>, <code>cancelled</code>, <code>failed</code>,
+                    <code>pending</code>.</p>
+                <note>
+                    It needs to be global due to some issues with some telegram apps.
+                    For instance, not all telegram apps relay properly the `cancelled` event, so you cannot expect to be
+                    notified in every case.
+                </note>
+            </def>
+            <def title="InitPurchase(PurchaseItemParams purchaseParams)"
+                 id="initpurchase-purchaseitemparams-purchaseparams">
+                Initiates a purchase of an item or virtual currency.
+                <p>The user will be prompted to confirm the purchase, and the callback registered with
+                    <code>OnPurchase</code> will be invoked with the result.</p>
+            </def>
+        </deflist>
+    </chapter>
+    <chapter title="Ads" id="ads">
+        <note>
+            Ads support must be first requested to P00LSGames team, otherwise the following methods will not work.
+        </note>
+        <deflist>
+            <def title="ShowAd(AdType type, Action<bool> callback)" id="showad-adtype-type-action-bool-callback">
+                <code-block lang="c#">
+                    public enum AdType
+                    {
+                        Interstitial,
+                        Rewarded,
+                    }
+                </code-block>
+                <p>Shows an ad to the user.
+                    The callback will be invoked with `true` if the user watched the ad until the end, `false`
+                    otherwise.</p>
+
+                <p>Obviously, Rewarded ad should be used to reward the player with in game currency or items, while
+                    Interstitial ad should be used to display ads without any reward.</p>
+            </def>
+        </deflist>
+    </chapter>
+    <chapter title="Analytics" id="analytics">
+        <p>
+            event names, can be anything, but should preferably adhere to <a href="https://support.google.com/analytics/answer/9267735">those guidelines</a>
+        </p>
+        <note>
+            P00LSGames sdk fires automatically some events, so you only need to care about in game events :
+            <list>
+                <li>login</li>
+                <li>page_view</li>
+                <li>begin_checkout</li>
+                <li>purchase</li>
+                <li>rewarded_ad</li>
+                <li>interstitial</li>
+            </list>
+        </note>
+        <deflist>
+            <def title="LogEvent(string eventName, object data)" id="logevent-string-eventname-object-data">
+                Logs an event to the analytics system. <code>data</code> should be serializable.
+            </def>
+            <def title="LogEvent(string name)" id="logevent-string-name">
+                Logs an event to the analytics system without any data.
+            </def>
+        </deflist>
+    </chapter>
+    <chapter title="Utils" id="utils">
+        <chapter title="Haptic feedbacks" id="haptic_feedbacks">
+            The SDK provides three categories of haptic feedbacks :
+            <list>
+                <li>Selection:
+                    <p>
+                        User selected something inside the game
+                    </p>
+                </li>
+                <li>Notification:
+                    <p>User received a notification</p>
+                </li>
+                <li>Impact:
+                    <p>A collision occured</p>
+                </li>
+            </list>
+            <p>Notification and impact feedbacks can vary in intensity.</p>
+
+            <p>Each notification type has its own method:</p>
+            <code-block lang="c#">
+                public void ImpactHapticFeedback(ImpactFeedBackForce force);
+
+                public void NotificationHapticFeedback(NotificationFeedBackForce force);
+
+                public void SelectHapticFeedback();
+            </code-block>
+        </chapter>
+    </chapter>
+</topic>

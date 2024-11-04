@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       id="Introduction" title="Introduction">
+    <p><a href="https://www.p00ls.games/">P00LS Games</a> is a platform for game developers to create, publish and
+        monetize their games on
+        telegram.</p>
+    <p>This documentation is intended to help you get started with our services and tools.</p>
+    <p>P00LS provides first and foremost a javascript SDK, but a Unity bridge is also available.</p>
+    <p>Here is a short overview of the services we provide.</p>
+    <deflist>
+        <def title="Authentication" id="authentication">
+            Players are authenticated implicitly with their telegram account.
+        </def>
+        <def title="Game state" id="game-state">
+            Save and load users progress across devices.
+        </def>
+        <def title="Analytics" id="analytics">
+            Track your games performance and player behavior.
+        </def>
+        <def title="Hosting" id="hosting">
+            Host your game files on our infrastructure.
+        </def>
+        <def title="In-app purchases" id="iap">
+            Monetize your games with in-app purchases in telegram's Stars.
+        </def>
+        <def title="Ads" id="ads">
+            Monetize your games with ads.
+        </def>
+        <def title="Referral" id="referral">
+            Reward players for inviting other players to your game.
+        </def>
+    </deflist>
+</topic>

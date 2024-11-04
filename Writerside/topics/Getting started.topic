@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Getting started" id="Getting started" help-id="unity-getting-started">
+
+    <chapter id="setup" title="Install P00LS Games SDK">
+        <procedure id="install-sdk">
+            <step>
+                Target WebGL platform
+            </step>
+            <step>
+                Adds the P00LSGames package:
+                <list>
+                    <li>Open Unity Package Manager</li>
+                    <li>Click the
+                        <control>+</control>
+                        button
+                    </li>
+                    <li>Choose
+                        <control>Add package from git URL</control>
+                    </li>
+                    <li>
+                        Enter
+                        <path>https://github.com/p00ls-games-hosting/unity-bridge.git?path=io.p00ls.games</path>
+                    </li>
+                </list>
+            </step>
+            <step>
+                Import the P00LS WebGL Template
+                <list>
+                    <li>Select
+                        <ui-path>Services | P00LS | Import WebGL template</ui-path>
+                    </li>
+                    <li>
+                        Select
+                        <ui-path>Services | P00LS | Reset Template variables</ui-path>
+                    </li>
+                </list>
+            </step>
+            <step>
+                Drag and drop prefab
+                <code>P00lsGamesSDK</code>
+                in your scene from
+                <path>Packages/P00LS Games SDK/Prefabs</path>
+                folder
+            </step>
+            <step>
+                Bind the <code>P00lsGamesSDK</code> into your script (or use any other means you prefer to access the
+                SDK instance)
+            </step>
+            <step>
+                You're all set, you can now use the SDK in your project. Refer to
+                <a href="Bridge-API.topic"/>, or study the <a href="https://github.com/p00ls-games-hosting/unity-bridge/tree/main/PlaceHolderProject">Placeholder project</a>, for more information
+            </step>
+
+        </procedure>
+        <warning>
+            When it comes to WebGL custom variables, Unity has a known issue where it refuses to save them, so the Reset
+            Template variables step might not work as expected.
+            <p>
+                In this case, it seems that opening Player settings
+                <ui-path>Edit | Project settings | Player</ui-path>
+                , selecting a different template, and then selecting the <code>P00LS</code> template again, will make
+                the variables work.
+            </p>
+            <p>
+                Don't forget to apply
+                <ui-path>Services | P00LS | Reset Template variables</ui-path>
+                again after that.
+            </p>
+        </warning>
+    </chapter>
+    <chapter title="Configure in-app purchases" id="setup-in-app-purchase">
+        <p>
+            Given how telegram invoices work, you need to implement a global callback that will receive all invoices feedbacks.
+        </p>
+        <p>
+            Just add your callback to <code>Bridge.OnPurchase</code> with your action early in the game lifecycle, and you're all set.
+        </p>
+    </chapter>
+    <chapter title="Configuration" id="unity-configuration">
+        SDK configuration is implicit, and will vary depending on the environment.
+    </chapter>
+</topic>

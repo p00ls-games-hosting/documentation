@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE instance-profile
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/product-profile.dtd">
+
+<instance-profile id="in"
+                 name="P00LS Games SDK"
+                 start-page="Introduction.topic">
+
+    <toc-element topic="Introduction.topic"/>
+    <toc-element topic="Best-practices.topic"/>
+    <toc-element topic="Unity.topic">
+        <toc-element topic="Getting started.topic"/>
+        <toc-element topic="Bridge-API.topic"/>
+    </toc-element>
+    <toc-element topic="Deploy.topic"/>
+    <toc-element topic="Environments.topic"/>
+</instance-profile>

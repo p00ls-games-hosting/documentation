@@ -9,7 +9,7 @@
     <toc-element topic="Introduction.topic"/>
     <toc-element topic="Best-practices.topic"/>
     <toc-element topic="Unity.topic">
-        <toc-element topic="Getting started.topic"/>
+        <toc-element topic="Getting-started.topic"/>
         <toc-element topic="Bridge-API.topic"/>
     </toc-element>
     <toc-element topic="Deploy.topic"/>

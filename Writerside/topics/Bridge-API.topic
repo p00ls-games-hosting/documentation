@@ -66,13 +66,13 @@
                     serializable.
                 </p>
             </def>
-            <def title="SavePartData(string docKey, object data" id="savepartdata-string-dockey-object-data">
+            <def title="SavePartData(string docKey, object data)" id="savepartdata-string-dockey-object-data">
                 Saves an arbitrary object linked to a key.
                 This data is also persisted across sessions, and is available on any device the user logs in.
                 <p>Objects passed to this method should be serializable.</p>
 
             </def>
-            <def title="ReadPartData<T>(string docKey, Action<T> callback"
+            <def title="ReadPartData<T>(string docKey, Action<T> callback)"
                  id="readpartdata-t-string-dockkey-action-t-callback">
                 Retrieves the data saved with <code>SavePartData</code> under <code>docKey</code>.
                 <p>The callback will be invoked with the saved data, or null if no data was saved so far.</p>

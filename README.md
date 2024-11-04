@@ -1,5 +1,6 @@
 # Documentation
 
-You will find here everything you need to know about integrating with p00ls games
+Sources for documentation website. 
 
-Go to the [Wiki](../../wiki) to learn more
+Available [here](https://p00ls-games-hosting.github.io/documentation)
+

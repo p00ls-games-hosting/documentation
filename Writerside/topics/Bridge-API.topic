@@ -97,7 +97,7 @@
                 The callback will be invoked with the generated link.
                 The link is always the same after the initial call.
             </def>
-            <def title="GetReferrer(Action<Referrer> callback" id="getreferrer-action-referrer-callback">
+            <def title="GetReferrer(Action<Referrer> callback)" id="getreferrer-action-referrer-callback">
                 Get referrer minimal information if present, null otherwise.
                 <code-block lang="c#">
                     public class Referrer

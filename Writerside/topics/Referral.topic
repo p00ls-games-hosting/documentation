@@ -67,7 +67,7 @@
                     sdk.GetReferees(referees =>
                     {
                         Debug.Log($"Total: {referees.total}");
-                        Debug.AppendLog($"Next: {referees.next}");
+                        Debug.Log($"Next: {referees.next}");
                         foreach (var referee in referees.page)
                         {
                             Debug.Log(

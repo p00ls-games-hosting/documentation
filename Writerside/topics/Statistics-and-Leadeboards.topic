@@ -5,5 +5,238 @@
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        title="Statistics and Leadeboards" id="Statistics-and-Leadeboards">
 
-    <p>Start typing here...</p>
+    <p>
+        Statistics are a means to save interesting numerical aspects of player game.
+        For instance, a statistic can represent a balance, xp points, score, etc.
+    </p>
+    <p>
+        Even if it looks like statistics overlap the game state feature,
+        it comes with the benefit of attaching an implicit leaderboard
+        to each of them.
+    </p>
+
+    <p>When the SDK sees a statistic not defined upfront, it still accepts it and attaches a default configuration </p>
+    <deflist type="narrow">
+        <def title="Update strategy" id="update-strategy">LAST</def>
+        <def title="Reset interval" id="reset-interval">NEVER</def>
+    </deflist>
+    More about those values below.
+
+    <note>
+        To define or update your statistics definition,
+        contact P00LS directly with a list of statistics name and configuration
+        to apply.
+    </note>
+
+    <chapter title="Update mode" id="update_mode">
+
+        <p>
+            Update mode defines how values pushed to the backend will get updated
+        </p>
+        <deflist>
+            <def title="LAST" id="last">The stat will always get the last value pushed, no computation will be applied
+            </def>
+            <def title="SUM" id="sum">The stat will increase by the given value</def>
+            <def title="MIN" id="min">The stat will get updated only if the new value is lower than the current value
+            </def>
+            <def title="MAX" id="max">The stat will get updated only if the new value is greater than the current
+                value
+            </def>
+        </deflist>
+    </chapter>
+
+    <chapter title="Reset interval" id="reset-interval-1">
+        This parameter governs both the leaderboard and the statistic value.
+        At the given reset interval, the statistic value
+        will go back to 0, and a new leaderboard will start for the period.
+        <deflist>
+            <def title="NEVER" id="never">The stat and leaderboard never reset</def>
+            <def title="DAILY" id="daily">Reset every day at 00:00 UTC,</def>
+            <def title="WEEKLY" id="weekly">Reset every week on Monday 00:00 UTC</def>
+            <def title="MONTHLY" id="monthly">Reset every month, first day of the month at 00:00 UTC</def>
+        </deflist>
+    </chapter>
+    <chapter title="Manage statistic values" id="manage_statistic_values">
+        <warning>
+            To avoid any conversion issues, P00LS Games SDK only accepts Integer values.
+            If you need decimal points values, you should apply some conversion before and after saving.
+            Beware, however, that any place that would like to display the associated leaderboard won't apply the same
+            conversion.
+        </warning>
+        <chapter title="Update" id="update">
+            Each statistic can be updated on a case-by-case basis, but updates can also come in batch for maximum
+            efficiency.
+            That's why update methods accept a list of updates.
+
+            <tabs>
+                <tab title="Unity" id="unity">
+                    <code-block lang="C#">
+                    p00lsGamesSdk.UpdateStatistic(new[]
+                    {
+                        new StatisticUpdate
+                        {
+                            name = "hiscore",
+                            value = 100
+                        },
+                        new StatisticUpdate
+                        {
+                            name = "hiscore_weekly",
+                            value = 200
+                        },
+                    });
+                    </code-block>
+                </tab>
+                <tab title="Typescript" id="typescript">
+                   <code-block lang="TypeScript">
+                    sdk.statistics.updateValues({
+                        test_stat_1: Math.floor(Math.random() * 100),
+                        test_stat_2: Math.floor(Math.random() * 100),
+                      })
+                   </code-block>
+                </tab>
+            </tabs>
+        </chapter>
+        <chapter title="Get" id="get">
+            All player statistics are fetched at once.
+            If a statistics is using a reset interval, the field <code>resetId</code> will be present, with the number
+            of seconds
+            before reset.
+            <tabs>
+                <tab title="Unity" id="unity-1">
+                    <code-block lang="C#">
+                    sdk.GetStatistics(values =>
+                    {
+                        Debug.Log("Statistics");
+                        foreach (var (statName, stat) in values)
+                        {
+                            // values a dictionary of statName -> stat info
+                            Debug.Log(
+                                $"{statName}: {stat.value} // {stat.version}  Reset : {stat.resetIn.HasValue} {stat.resetIn}");
+                        }
+                    });
+                    </code-block>
+                </tab>
+                <tab title="Typescript" id="typescript-1">
+                    <code-block lang="TypeScript">
+                        const values = await sdk.statistics.fetchValues();
+                        // values is on object of type
+
+                        type UserStatisticValues = {
+                          [key: string]: StatisticValueSummary;
+                        };
+
+                        interface StatisticValueSummary {
+                          value: number;
+                          version: number;
+                          resetIn?: number;
+                        }
+                    </code-block>
+                </tab>
+            </tabs>
+        </chapter>
+    </chapter>
+    <chapter title="Leaderboards" id="leaderboards">
+
+        <chapter title="User position" id="user_position">
+            You can query just the user position for a given statistic.
+            The result can be null if no values have been recorded yet.
+            <tabs>
+                <tab title="Unity" id="unity-2">
+                    <code-block lang="C#">
+                    sdk.GetUserPosition("hiscore", result =>
+                    {
+                        Debug.Log("Position:");
+                        Debug.Log($"Position: {result?.position}");
+                        Debug.Log($"Value: {result?.value}")
+                        Debug.Log($"Reset in :{result?.resetIn}");
+                    });
+                    </code-block>
+                </tab>
+                <tab title="Typescript" id="typescript-2">
+                    <code-block lang="typescript">
+                        const position = await sdk.statistics.fetchLeaderboardPosition("hiscore");
+                        if(position) {
+                            console.log("Position:");
+                            console.log(`Position: ${result.position}`);
+                            console.log(`Value: ${result.value}`)
+                            console.log(`Reset in : ${result.resetIn || 'nop'}`);
+                        }
+                    </code-block>
+                </tab>
+            </tabs>
+        </chapter>
+        <chapter title="Fetch" id="fetch">
+            You can get a leaderboard from first position and then paginate to the end.
+            If the leaderboard has a reset interval,
+            the field <code>resetIn</code> will be defined, with the number of seconds before reset.
+            <tabs>
+                <tab title="Unity" id="unity-3">
+                    <code-block lang="c#">
+                        sdk.GetLeaderboard("hiscore", leaderboard =>
+                        {
+
+                            Debug.Log($"Next: {leaderboard.next}");
+                            Debug.Log($"Reset In: {leaderboard.resetIn}");
+                            foreach (var entry in leaderboard.entries)
+                            {
+                                Debug.Log(
+                                    $"Entry: {entry.displayName}, {entry.position}, {entry.value}");
+                            }
+                        });
+                    </code-block>
+                    <code>GetLeaderboard</code> accept two optional parameters :
+                    <deflist>
+                        <def title="pageSize" id="pagesize">Default 50</def>
+                        <def title="next" id="next">Cursor to fetch the next page</def>
+                    </deflist>
+                </tab>
+                <tab title="Typescript" id="typescript-3">
+                     <code-block lang="TypeScript">
+                        const {entries, next, resetIn} = await sdk.statistics.fetchLeaderboard('hiscore');
+                    </code-block>
+                    <code>fetchLeaderboard</code> accept an optional parameter, where next is the next page cursor, and
+                    limit is the initial page size.
+                    <code-block lang="TypeScript">
+                    type Params = {
+                        next?: string;
+                        limit?: number
+                    }
+                    </code-block>
+                </tab>
+            </tabs>
+        </chapter>
+        <chapter title="Around user" id="around-user">
+            You can also query a leadeboard to get a portion of it centered around the user.
+            It works the same way as <a anchor="fetch"/> the only difference being you cannot paginate the results.
+
+            <tabs>
+                <tab title="Unity" id="unity-4">
+                    <code-block lang="c#">
+                        sdk.GetLeaderboardAround("hiscore", leaderboard =>
+                        {
+
+                            Debug.Log($"Next: {leaderboard.next}");
+                            Debug.Log($"Reset In: {leaderboard.resetIn}");
+                            foreach (var entry in leaderboard.entries)
+                            {
+                                Debug.Log(
+                                    $"Entry: {entry.displayName}, {entry.position}, {entry.value}");
+                            }
+                        });
+                    </code-block>
+                    <code>GetLeaderboardAround</code> accept two optional parameters :
+                    <deflist>
+                        <def title="pageSize" id="pagesize-2">Default 50</def>
+                    </deflist>
+                </tab>
+                <tab title="Typescript" id="typescript-4">
+                     <code-block lang="TypeScript">
+                        const {entries, next, resetIn} = await sdk.statistics.fetchLeaderboardAround('hiscore');
+                    </code-block>
+                    <code>fetchLeaderboardAround</code> accept an optional parameter, limit.
+                </tab>
+            </tabs>
+        </chapter>
+    </chapter>
+
 </topic>

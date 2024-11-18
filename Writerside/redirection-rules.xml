@@ -14,4 +14,20 @@
         <description>Created after removal of "How to" from P00LS Games SDK</description>
         <accepts>How-to.html</accepts>
     </rule>
+    <rule id="59c1de4d">
+        <description>Created after removal of "Getting started with unity" from P00LS Games SDK
+            Help IDs that are no longer available in build after removal:
+
+            Getting-started;unity-getting-started;Getting started
+        </description>
+        <accepts>Getting-started-unity.html</accepts>
+    </rule>
+    <rule id="6383fa2b">
+        <description>Created after removal of "Bridge API" from P00LS Games SDK</description>
+        <accepts>Bridge-API.html</accepts>
+    </rule>
+    <rule id="60761c93">
+        <description>Created after removal of "Unity" from P00LS Games SDK</description>
+        <accepts>Unity.html</accepts>
+    </rule>
 </rules>

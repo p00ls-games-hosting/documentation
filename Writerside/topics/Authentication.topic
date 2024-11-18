@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Authentication" id="Authentication">
+
+    <p>The SDKs authenticate automatically the player through the telegram implicit auth, so you have nothing to do on
+        your end.
+        On top of that, the sdk provides some useful methods.</p>
+
+    <chapter title="User profile" id="user-profile">
+        <tabs>
+            <tab title="Unity" id="unity">
+                <code-block lang="C#">
+                    private void Awake() {
+                        var userProfile = p00lsGamesSdk.GetUserProfile();
+                        gameState.username = userProfile.firstName;
+                    }
+                </code-block>
+                <p>
+                    <code>GetUserProfile</code> returns
+                </p>
+                <code-block lang="c#">
+                    public class UserProfile
+                    {
+                        public string userId;
+                        public string firstName;
+                        public string username;
+                        public bool isPremium;
+                        public string game;
+                        public string? referrer;
+                    }
+                </code-block>
+            </tab>
+            <tab title="Typescript">
+                <code-block lang="TypeScript">
+                    const userProfile = p00lsSdk.auth.userProfile;
+                </code-block>
+            </tab>
+        </tabs>
+        <p>
+            On telegram, only the <code>firstName</code> is mandatory information, so everything but <code>userId</code>,
+            <code>firstName</code> and
+            <code>game</code> can be null.
+
+        </p>
+        <p>
+            <code>game</code> is the internal identifier of your game.
+        </p>
+        <p>
+            <code>referrer</code> is only present if the user was referred by another user.
+            Check <a href="Referral.topic">referral section to know more.</a>
+        </p>
+    </chapter>
+</topic>

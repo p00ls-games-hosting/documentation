@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Ads" id="Ads">
+
+    <note>
+        Ads' support must be first requested to P00LSGames team, otherwise the following methods will not work.
+    </note>
+    <p>
+        P00LS SDK supports both interstitial and rewarded ads.
+        Rewarded ad should be used to reward the player with in game currency or items, while
+        Interstitial ad should be used to display ads without any reward.
+    </p>
+    <tabs>
+        <tab title="Unity" id="unity">
+            <code-block lang="C#">
+                sdk.ShowAd(AdType.Rewarded, watched =>
+                {
+                    if (watched)
+                    {
+                        // reward the user
+                    }
+                });
+            </code-block>
+        </tab>
+        <tab title="Typescript" id="typescript">
+            <code-block lang="TypeScript">
+                const watched = await sdk.ads.show('rewarded');
+                if(watched) {
+                    // reward the user
+                }
+            </code-block>
+            where the parameter can be one of <code>rewarded</code>|<code>interstitial</code>
+        </tab>
+    </tabs>
+</topic>

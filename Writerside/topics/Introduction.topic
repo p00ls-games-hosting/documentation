@@ -3,33 +3,39 @@
 <topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        id="Introduction" title="Introduction">
-    <p><a href="https://www.p00ls.games/">P00LS Games</a> is a platform for game developers to create, publish and
-        monetize their games on
-        telegram.</p>
-    <p>This documentation is intended to help you get started with our services and tools.</p>
-    <p>P00LS provides first and foremost a javascript SDK, but a Unity bridge is also available.</p>
-    <p>Here is a short overview of the services we provide.</p>
-    <deflist>
-        <def title="Authentication" id="authentication">
-            Players are authenticated implicitly with their telegram account.
-        </def>
-        <def title="Game state" id="game-state">
-            Save and load users progress across devices.
-        </def>
-        <def title="Analytics" id="analytics">
-            Track your games performance and player behavior.
-        </def>
-        <def title="Hosting" id="hosting">
-            Host your game files on our infrastructure.
-        </def>
-        <def title="In-app purchases" id="iap">
-            Monetize your games with in-app purchases in telegram's Stars.
-        </def>
-        <def title="Ads" id="ads">
-            Monetize your games with ads.
-        </def>
-        <def title="Referral" id="referral">
-            Reward players for inviting other players to your game.
-        </def>
-    </deflist>
+    <section-starting-page>
+        <title>P00LS Games SDK</title>
+        <description>
+            P00LS Games is a platform for game developers to create, publish and monetize their games on Telegram.
+        </description>
+        <spotlight>
+            <a summary="Install and setup" href="Getting-started.topic"/>
+            <a href="Authentication.topic" summary="Players are authenticated implicitly with their telegram account."/>
+        </spotlight>
+        <primary>
+            <title>Main features</title>
+            <a href="Game-State.topic" summary="Save and load users progress across devices."/>
+            <a href="Statistics-and-Leadeboards.topic" summary="Manage various data points related to player activity, like score, levels, etc.
+            Each statistic comes with a leaderboard, allowing to display them in a competitive manner."/>
+            <a href="Referral.topic" summary="Give players a reward for inviting others to your games."/>
+            <a href="Analytics.topic" summary="Track your games performance and player behavior."/>
+            <a href="In-app-Purchases.topic" summary="Monetize your games with in-app purchases in telegram's Stars."/>
+            <a href="Ads.topic" summary="Monetize your games with rewarded ads and interstitials."/>
+            <a href="Device.topic" summary="Access to native features, like Haptic feedbacks."/>
+        </primary>
+        <misc>
+            <links>
+                <group>
+                    <title>Interesting reads</title>
+                    <a href="Environments.topic">Understand p00ls environments</a>
+                    <a href="Best-practices.topic" summary="Some recommendations"/>
+                    <a href="Reference.topic">SDK Reference</a>
+                    <a href="Deploy.topic" summary="How deployments work"/>
+                </group>
+
+            </links>
+        </misc>
+    </section-starting-page>
+
+
 </topic>

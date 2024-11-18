@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Device" id="Device" help-id="Device">
+
+    <p>P00LS Games SDK gives access to a few native features, like haptic feedbacks, if available</p>
+
+    <chapter title="Haptic feedbacks" id="haptic_feedbacks">
+        The SDK provides three categories of haptic feedbacks :
+        <deflist type="narrow">
+            <def title="Selection" id="selection">User selected something inside the game</def>
+            <def title="Notification" id="notification">User received a notification</def>
+            <def title="Impact" id="impact">A collision occurred</def>
+        </deflist>
+        <p>Notification and impact feedbacks can vary in intensity.</p>
+
+        <tabs>
+            <tab title="Unity">
+                <p>Each notification type has its own method:</p>
+                <code-block lang="c#">
+                    public void ImpactHapticFeedback(ImpactFeedBackForce force);
+
+                    public void NotificationHapticFeedback(NotificationFeedBackForce force);
+
+                    public void SelectHapticFeedback();
+                </code-block>
+            </tab>
+            <tab title="Typescript" id="typescript">
+
+                <list>
+                    <li>
+                        Impact
+                        <code-block lang="TypeScript">
+                            sdk.tma.haptic('impact', 'light');
+                            // style can be one of 'light' | 'medium' | 'heavy' | 'rigid' | 'soft'
+                        </code-block>
+                    </li>
+                    <li>
+                        Notification
+                        <code-block lang="TypeScript">
+                            sdk.tma.haptic('notification', 'success');
+                            // style can be one of 'error' | 'success' | 'warning'
+                        </code-block>
+                    </li>
+                    <li>
+                        Select
+                        <code-block lang="TypeScript">
+                            sdk.tma.haptic('select');
+                        </code-block>
+                    </li>
+                </list>
+
+
+            </tab>
+        </tabs>
+    </chapter>
+</topic>

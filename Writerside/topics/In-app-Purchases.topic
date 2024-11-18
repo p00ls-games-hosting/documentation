@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="In-app Purchases" id="In-app-Purchases">
+
+    <p>Players can buy either items or virtual currency in your game.</p>
+    <p>
+        It is your responsibility to define item ids.
+        Title, description and currency name are for display purposes only and can be changed at any time.
+    </p>
+
+    <p>
+        Given how Telegram operates, you must define a single callback to receive payment results events.
+        Refer to <a href="Getting-started.topic" anchor="setup-in-app-purchase">Configure In-app purchase</a>.
+    </p>
+    Your callback will be invoked with a structure looking like:
+    <code-block lang="TypeScript">
+            {
+              paymentId: string;
+              purchaseParams: PurchaseParams;
+              status: InvoiceStatus;
+            }
+        </code-block>
+    Where:
+    <deflist type="narrow">
+        <def title="paymentId" id="paymentid">Internal id for this payment.</def>
+        <def title="purchaseParams" id="purchaseparams">The initial purchase params you sent</def>
+        <def title="status" id="status"> One of <code>paid</code><code>failed</code><code>pending</code><code>cancelled</code></def>
+    </deflist>
+
+    <chapter title="Buy item" id="buy-item">
+        <tip>
+            Price is a unit price, so the SDK will multiply it by quantity before charging the user.
+        </tip>
+        Title and description will be displayed in the invoice to the user, so they should be readable.
+        <code>itemId</code> on the other hand is your own internal reference to the item.
+        Ideally, you should maintain an item inventory somewhere in your code base, where itemIds will be immutable, but
+        where you can change title and description at will.
+        <tabs>
+            <tab title="Unity" id="unity">
+                <code-block lang="C#">
+                    sdk.InitPurchase(new PurchaseItemParams
+                            {
+                                itemId = "itemId",
+                                description = "Test purchase",
+                                price = 1,
+                                quantity = 2,
+                                title = "Purchase"
+                            });
+                </code-block>
+            </tab>
+            <tab title="Typescript" id="typescript">
+                <code-block lang="TypeScript">
+                    await sdk.purchase.initPurchase({
+                      itemId: 'bad_sword_01',
+                      title: 'Big  sword',
+                      description: 'Slain your foes with style',
+                      quantity: 3,
+                      price: 1,
+                    });
+                </code-block>
+            </tab>
+        </tabs>
+    </chapter>
+    <chapter title="Buy In-game currency" id="buy-in-game-currency">
+        <tip>
+            Price is a unit price, so the SDK will multiply it by quantity before charging the user.
+        </tip>
+        <code>Symbol</code> and <code>name</code> parameters refers to the In-game currency, not Telegram STARS.
+        <tabs>
+            <tab title="Unity" id="unity-1">
+                <code-block lang="C#">
+                sdk.InitPurchase(new PurchaseCurrencyParams
+                    {
+                    name = "Game Coins",
+                    symbol = "GOLD",
+                    price = 10,
+                    quantity = 100
+                });
+                </code-block>
+            </tab>
+            <tab title="Typescript" id="typescript-1">
+                <code-block lang="TypeScript">
+                    await sdk.purchase.initPurchase({
+                      symbol: 'GOLD',
+                      name: 'Game coins',
+                      price:1,
+                      quantity:100
+                    })
+                </code-block>
+            </tab>
+        </tabs>
+    </chapter>
+</topic>

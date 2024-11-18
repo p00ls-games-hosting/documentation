@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Reference" id="Reference">
+
+    <tabs>
+        <tab title="Unity" id="unity">
+            <p>The SDK API is defined into on interface:
+                <a href="https://github.com/p00ls-games-hosting/unity-bridge/blob/main/io.p00ls.games/Runtime/Bridge.cs">Runtime/Bridge.cs</a>, but here is a more detailed explanation.
+                Most methods are asynchronous and accept callbacks
+            </p>
+
+        </tab>
+        <tab title="Typescript" id="typescript">
+
+        </tab>
+    </tabs>
+</topic>

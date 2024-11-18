@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Analytics" id="Analytics">
+
+    <p>P00LS Games SDK provides a lightweight analytics mechanism based on Google Analytics.</p>
+    <p>
+        The SDK tracks by itself a few events, and if you want to track your owning, they should adhere to 
+        <a href="https://support.google.com/analytics/answer/9267735">official GA guidelines.</a>
+    </p>
+    <deflist type="narrow">
+        <def title="login" id="login">Fired at SDK init time</def>
+        <def title="rewarded_ad" id="rewarded_ad">Fired on each rewarded ad call</def>
+        <def title="interstitial" id="interstitial">Fired on each interstitial ad call</def>
+        <def title="begin_checkout" id="begin_checkout">Fired at the beginning of In-game purchase</def>
+        <def title="purchase" id="purchase">Fired when payment was successful</def>
+    </deflist>
+
+    You can fire your own events that way:
+
+    <tabs>
+        <tab title="Unity" id="unity">
+            <code-block lang="C#">
+                p00lsGamesSdk.LogEvent("game_start");
+            </code-block>
+            or
+            <code-block lang="C#">
+                p00lsGamesSdk.LogEvent("custom", new
+                {
+                    game_mode = "normal"
+                });
+            </code-block>
+        </tab>
+        <tab title="Typescript" id="typescript">
+            <code-block lang="TypeScript">
+                sdk.analytics.logEvent("game_start");
+            </code-block>
+            or
+            <code-block lang="TypeScript">
+                sdk.analytics.logEvent("custom", {
+                    game_mode = "normal"
+                });
+            </code-block>
+        </tab>
+    </tabs>
+</topic>

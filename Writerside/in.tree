@@ -7,11 +7,17 @@
                  start-page="Introduction.topic">
 
     <toc-element topic="Introduction.topic"/>
+    <toc-element topic="Getting-started.topic"/>
+    <toc-element topic="Authentication.topic"/>
+    <toc-element topic="Game-State.topic"/>
+    <toc-element topic="Statistics-and-Leadeboards.topic"/>
+    <toc-element topic="In-app-Purchases.topic"/>
+    <toc-element topic="Ads.topic"/>
+    <toc-element topic="Referral.topic"/>
+    <toc-element topic="Analytics.topic"/>
+    <toc-element topic="Device.topic"/>
     <toc-element topic="Best-practices.topic"/>
-    <toc-element topic="Unity.topic">
-        <toc-element topic="Getting-started.topic"/>
-        <toc-element topic="Bridge-API.topic"/>
-    </toc-element>
+    <toc-element topic="Reference.topic"/>
     <toc-element topic="Deploy.topic"/>
     <toc-element topic="Environments.topic"/>
 </instance-profile>

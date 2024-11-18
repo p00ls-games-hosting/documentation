@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Game State" id="Game-State">
+
+    <p>P00LS Games SDK can save arbitrary chunks of JSON data, aka saves, so that the user's progress is saved across
+        devices</p>
+    <p>The underlying storage is based on Firestore, as such, the SDK will use its implicit conversion, if any.</p>
+    <tip>
+        To avoid generating too many network requests, all save requests are buffered for a few seconds, and only the
+        last one will get sent.
+        To prevent data losses, the SDK automatically instructs Telegram to ask for confirmation before closing the app,
+        but of course, a user can still ignore it.
+    </tip>
+
+    <p>
+        Unity Bridge relies on <a
+            href="https://docs.unity3d.com/Packages/com.unity.serialization@3.1/manual/index.html">Unity Serialization
+        package</a> to serialize data.
+    </p>
+    <chapter title="User Data" id="user-data">
+        <chapter title="Save" id="save">
+            <tabs>
+                <tab title="Unity" id="unity">
+                    <code-block lang="C#">
+                        internal class UserData
+                        {
+                            public float hiscore;
+                        }
+
+                        public void Save(UserData userData)
+                        {
+                            p00lsGamesSdk.SaveUserData(userData);
+                        }
+
+                    </code-block>
+                </tab>
+                <tab title="Typescript" id="typescript">
+                    <code-block lang="typescript">
+                        await sdk.data.saveUserData({
+                          myTestKey: 'myTestValue',
+                        });
+                    </code-block>
+
+                </tab>
+            </tabs>
+        </chapter>
+        <chapter title="Get" id="get">
+            If no data have been saved yet, those methods will yield undefined or null.
+            There is no type enforcement on the SDK side. For instance, if you introduce a new field, you should apply some
+            migration logic at load time.
+            <tabs>
+                <tab title="Unity" id="unity-1">
+                    <code-block lang="C#"><![CDATA[
+                        p00lsGamesSdk.GetUserData<UserData>(v =>
+                        {
+                            // do something with the data
+
+                            gameState.Start();
+                        });
+                    ]]></code-block>
+                </tab>
+                <tab title="Typescript" id="typescript-1">
+                    <code-block lang="typescript">
+                        await sdk.data.getUserData();
+                    </code-block>
+                </tab>
+            </tabs>
+        </chapter>
+    </chapter>
+    <chapter title="Parts" id="save-parts">
+        Sometimes, saving every time a big chunk of data can be wasteful.
+        For instance, things like user preferences (sound on/off, etc), don't change so much, and
+        including them each time would just yield heavier network calls.
+        <p>
+            For that purpose, you can use parts.
+            Parts work pretty much like user data, only you can specify a key to store them into.
+        </p>
+        <warning>
+            Parts are completely unrelated with the main save.
+            Parts keys do not represent a field in the main save.
+        </warning>
+        <chapter title="Save" id="save-1">
+            <tabs>
+                <tab title="Unity">
+                    <code-block lang="C#">
+                        private void SavePartData(string docKey, UserData userData)
+                        {
+                            sdk.SavePartData(docKey, userData);
+                        }
+                    </code-block>
+                </tab>
+                <tab title="Typescript">
+                    <code-block lang="TypeScript">
+                        await sdk.data.savePartData('aKey', {
+                            myTestPartKey1: 'myTestPartValue1',
+                            myTestPartKey2: 'myTestPartValue2',
+                        });
+                    </code-block>
+                </tab>
+            </tabs>
+        </chapter>
+        <chapter title="Get" id="get-1">
+            <tabs>
+                <tab title="Unity">
+                    <code-block lang="C#"><![CDATA[
+                        sdk.ReadPartData<UserData>(docKey, data => // do something with data);
+                    ]]></code-block>
+                </tab>
+                <tab title="Typescript">
+                    <code-block lang="TypeScript">
+                        const savedPart = await sdk.data.readPartData('aKey');
+                        // do something with saved part
+                    </code-block>
+                </tab>
+            </tabs>
+        </chapter>
+    </chapter>
+</topic>

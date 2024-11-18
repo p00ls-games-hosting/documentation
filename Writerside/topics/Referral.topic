@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Referral" id="Referral">
+
+    <p>
+        Players can invite other players to the game and get rewarded for it.
+        P00LS games sdk provides the referral link generation, as long as referrer / referee tracking, but it's on the
+        game developer to define the rewards.
+    </p>
+    <p>Typically, game developers should check if a player is a new player and if he was referred to by another player
+        and reward both players accordingly.</p>
+
+    <p>
+        <code>UserProfile</code> object has a <code>referrer</code> field, that is only present if the user was referred
+        by another user, which is the most basic way to check if a player was referred.
+    </p>
+
+    <chapter title="Generate referral link" id="generate_referral_link">
+        The SDK provides a unique an immutable link per user and game.
+
+        <tabs>
+            <tab title="Unity" id="unity">
+                <code-block lang="C#">
+                    sdk.GetReferralLink(link => { // do something with the link });
+                </code-block>
+            </tab>
+            <tab title="Typescript" id="typescript">
+                <code-block lang="TypeScript">
+                    const referralLink = await sdk.referral.getReferralLink();
+                    // do something with the link
+                </code-block>
+            </tab>
+        </tabs>
+    </chapter>
+    <chapter title="Get referrer" id="get-referrer">
+        The sdk can provide very basic information about the referrer to the referee.
+        It can be useful to display a specific onboarding message.
+        The method will yield null or undefined if there is no referrer.
+        <tabs>
+            <tab title="Unity" id="unity-1">
+               <code-block lang="C#">
+                   sdk.GetReferrer(referrer => { Debug.Log(referrer.firstName); });
+               </code-block>
+            </tab>
+            <tab title="Typescript" id="typescript-1">
+                <code-block lang="TypeScript">
+                    const referrer = await referral.getReferrer();
+                    referrer &amp;&amp; console.log(`You were invited by ${referrer.firstName}`);
+                </code-block>
+            </tab>
+        </tabs>
+    </chapter>
+    <chapter title="Get referees" id="get-referees">
+        <p>The referrer can have access to a list of all his referees.
+            It can be useful to display a list of «friends» but also to reward this action with something meaningful
+            inside the game.</p>
+        <p>
+            This request is paginated. It's possible to specify the page size in the first call, then use the cursor returned
+            to fetch the next page.
+        </p>
+        <tabs>
+            <tab title="Unity" id="unity-2">
+                <code-block lang="c#">
+                    sdk.GetReferees(referees =>
+                    {
+                        Debug.Log($"Total: {referees.total}");
+                        Debug.AppendLog($"Next: {referees.next}");
+                        foreach (var referee in referees.page)
+                        {
+                            Debug.Log(
+                                $"Referee: {referee.firstName}, {referee.createdAt.ToString(CultureInfo.InvariantCulture)}");
+                        }
+                    });
+                </code-block>
+                <code>GetReferees</code> accept two optional parameters :
+                <deflist>
+                    <def title="pageSize" id="pagesize">Default 50</def>
+                    <def title="next" id="next">Cursor to fetch the next page</def>
+                </deflist>
+            </tab>
+            <tab title="Typescript" id="typescript-2">
+                <code-block lang="TypeScript">
+                    const {page, total, next} = await sdk.referral.getReferees();
+                </code-block>
+                <code>getReferees</code> accept an optional parameter, where next is the next page cursor, and pageSize is the initial page size.
+                <code-block lang="TypeScript">
+                    type Params = {
+                        next?: string;
+                        pageSize?: number
+                    }
+                </code-block>
+            </tab>
+        </tabs>
+
+    </chapter>
+</topic>

@@ -7,7 +7,7 @@
 
     <tabs>
         <tab title="Unity" id="unity">
-            <p>The SDK API is defined into on interface:
+            <p>The SDK API is defined into an interface:
                 <a href="https://github.com/p00ls-games-hosting/unity-bridge/blob/main/io.p00ls.games/Runtime/Bridge.cs">Runtime/Bridge.cs</a>, but here is a more detailed explanation.
                 Most methods are asynchronous and accept callbacks
             </p>

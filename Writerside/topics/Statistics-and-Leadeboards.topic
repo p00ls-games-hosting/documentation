@@ -4,7 +4,7 @@
 <topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        title="Statistics and Leadeboards" id="Statistics-and-Leadeboards">
-
+    <show-structure depth="2"/>
     <p>
         Statistics are a means to save interesting numerical aspects of player game.
         For instance, a statistic can represent a balance, xp points, score, etc.
@@ -66,25 +66,20 @@
         <chapter title="Update" id="update">
             Each statistic can be updated on a case-by-case basis, but updates can also come in batch for maximum
             efficiency.
-            That's why update methods accept a list of updates.
+            You can specify as many statistics you want in the update request. Other already existing stats will remain
+            unchanged.
 
             <tabs>
                 <tab title="Unity" id="unity">
-                    <code-block lang="C#">
-                    p00lsGamesSdk.UpdateStatistic(new[]
-                    {
-                        new StatisticUpdate
+                    <code-block lang="C#"><![CDATA[
+
+                    p00lsGamesSdk.UpdateStatistic(
+                        new Dictionary<string, long>
                         {
-                            name = "hiscore",
-                            value = 100
-                        },
-                        new StatisticUpdate
-                        {
-                            name = "hiscore_weekly",
-                            value = 200
-                        },
-                    });
-                    </code-block>
+                            { "hiscore", 100 },
+                            { "hiscore_weekly", 300 },
+                        });
+                    ]]></code-block>
                 </tab>
                 <tab title="Typescript" id="typescript">
                    <code-block lang="TypeScript">
@@ -195,11 +190,11 @@
                         const {entries, next, resetIn} = await sdk.statistics.fetchLeaderboard('hiscore');
                     </code-block>
                     <code>fetchLeaderboard</code> accept an optional parameter, where next is the next page cursor, and
-                    limit is the initial page size.
+                    pageSize is the initial page size.
                     <code-block lang="TypeScript">
                     type Params = {
                         next?: string;
-                        limit?: number
+                        pageSize?: number
                     }
                     </code-block>
                 </tab>
@@ -233,7 +228,13 @@
                      <code-block lang="TypeScript">
                         const {entries, next, resetIn} = await sdk.statistics.fetchLeaderboardAround('hiscore');
                     </code-block>
-                    <code>fetchLeaderboardAround</code> accept an optional parameter, limit.
+                    <code>fetchLeaderboardAround</code> accept an optional parameter, where pageSize is the initial page
+                    size.
+                    <code-block lang="TypeScript">
+                    type Params = {
+                        pageSize?: number
+                    }
+                    </code-block>
                 </tab>
             </tabs>
         </chapter>

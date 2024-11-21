@@ -3,7 +3,7 @@
         SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
 <topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
-       title="Device" id="Device">
+       title="Mini App" id="MiniApp">
 
     <p>P00LS Games SDK gives access to a few native features, like haptic feedbacks, if available</p>
 
@@ -17,7 +17,7 @@
         <p>Notification and impact feedbacks can vary in intensity.</p>
 
         <tabs>
-            <tab title="Unity">
+            <tab title="Unity" id="unity">
                 <p>Each notification type has its own method:</p>
                 <code-block lang="c#">
                     public void ImpactHapticFeedback(ImpactFeedBackForce force);
@@ -53,6 +53,23 @@
                 </list>
 
 
+            </tab>
+        </tabs>
+    </chapter>
+    <chapter title="Server time" id="server-time">
+        <tabs>
+            <tab title="Unity" id="unity-1">
+               <code-block lang="C#">
+                   sdk.GetServerTime(date =>
+                    Debug.Log($"Server time: {date.ToString(CultureInfo.InvariantCulture)}")
+                   );
+               </code-block>
+            </tab>
+            <tab title="Typescript" id="typescript-1">
+                <code-block lang="TypeScript">
+                    const serverTime = await sdk.tma.getServerTime();
+                    console.log(serverTime.toISOString());
+                </code-block>
             </tab>
         </tabs>
     </chapter>

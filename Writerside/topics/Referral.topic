@@ -34,6 +34,22 @@
                 </code-block>
             </tab>
         </tabs>
+
+        You can directly invoke the Telegram share UI with the link and an optional message:
+        <tabs>
+            <tab title="Unity" id="unity-3">
+                <code-block lang="C#">
+                    sdk.ShareReferralLink()
+                </code-block>
+                You can pass an optional string as argument, to override the default message.
+            </tab>
+            <tab title="Typescript" id="typescript-3">
+                <code-block lang="TypeScript">
+                    sdk.referral.shareLink();
+                </code-block>
+                You can pass an optional string as argument, to override the default message.
+            </tab>
+        </tabs>
     </chapter>
     <chapter title="Get referrer" id="get-referrer">
         The sdk can provide very basic information about the referrer to the referee.
@@ -58,8 +74,15 @@
             It can be useful to display a list of «friends» but also to reward this action with something meaningful
             inside the game.</p>
         <p>
-            This request is paginated. It's possible to specify the page size in the first call, then use the cursor returned
+            This request is paginated.
+            It's possible to specify the page size in the first call, then use the cursor
+            returned
             to fetch the next page.
+        </p>
+        <p>
+            In case you just want to check new referees since the last check, it's possible to filter results with a
+            <code>since</code> query parameter.
+            Only referees who onboarded after that date will appear.
         </p>
         <tabs>
             <tab title="Unity" id="unity-2">
@@ -75,21 +98,24 @@
                         }
                     });
                 </code-block>
-                <code>GetReferees</code> accept two optional parameters :
+                <code>GetReferees</code> accept three optional parameters :
                 <deflist>
                     <def title="pageSize" id="pagesize">Default 50</def>
                     <def title="next" id="next">Cursor to fetch the next page</def>
+                    <def title="since" id="since">DateTime. Filter referees to get only those who onboarded after this date</def>
                 </deflist>
             </tab>
             <tab title="Typescript" id="typescript-2">
                 <code-block lang="TypeScript">
                     const {page, total, next} = await sdk.referral.getReferees();
                 </code-block>
-                <code>getReferees</code> accept an optional parameter, where next is the next page cursor, and pageSize is the initial page size.
+                <code>getReferees</code> accept an optional parameter, where next is the next page cursor, pageSize
+                is the initial page size, and since is the query filter mentioned above.
                 <code-block lang="TypeScript">
                     type Params = {
                         next?: string;
-                        pageSize?: number
+                        pageSize?: number;
+                        since?:Date;
                     }
                 </code-block>
             </tab>

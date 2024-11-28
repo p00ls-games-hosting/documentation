@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Airdrop" id="Airdrop">
+
+    <p>SDK provides what's necessary to handle airdrops, beginning with user's wallet management.</p>
+
+    <chapter title="Get user wallet" id="get-user-wallet">
+        Retrieve the current user's address. If undefined, the user should be invited to set one up.
+        <tabs>
+            <tab title="Unity" id="unity">
+                <code-block lang="C#">
+                    // address can be null
+                    sdk.GetUserWalletAddress(
+                        maybeAddress => Debug.Log($"User address: {maybeAddress}"
+                    );
+                </code-block>
+            </tab>
+            <tab title="Typescript" id="typescript">
+                <code-block lang="typescript">
+                    // address can be undefined
+                    const {address} = await sdk.wallet.fetchWallet();
+                    console.log(`User address: ${address}`);
+                </code-block>
+            </tab>
+        </tabs>
+    </chapter>
+    <chapter title="Change user address" id="change-user-address">
+        Whether the user has an address, you can ask the SDK to initiate an update.
+        SDK will open p00ls launcher, where the user will be able to set / change his address,
+        and then will get redirected back into your application.
+        <tabs>
+            <tab title="Unity" id="unity-1">
+                <code-block lang="C#">
+                    sdk.InitiateWalletChange();
+                </code-block>
+            </tab>
+            <tab title="Typescript" id="typescript-1">
+                <code-block lang="typescript">
+                    sdk.wallet.changeWallet();
+                </code-block>
+            </tab>
+        </tabs>
+    </chapter>
+</topic>

@@ -56,6 +56,44 @@
             </tab>
         </tabs>
     </chapter>
+    <chapter title="Links" id="links">
+        <chapter title="Opening URL" id="opening-url">
+            In the situation where you would want 
+            to use a method like <code>window.open</code>, given a Mini app is a web view, 
+            it won't work as usual. Instead, you can use the <code>openLink</code> method.
+            <tabs>
+                <tab title="Unity" id="unity-2">
+                   <code-block lang="C#">
+                        sdk.OpenURL("https://some.url");
+                   </code-block>
+                </tab>
+                <tab title="Typescript" id="typescript-2">
+                    <code-block lang="typescript">
+                        sdk.tma.openLink("https://some.url");
+                    </code-block>
+
+                </tab>
+            </tabs>
+        </chapter>
+        <chapter title="Sharing URL" id="sharing_url">
+            If you need to share a URL using the native UI, you can use the <code>share</code> method.
+            To share the user's referral link directly,
+            use the shortcut method from <a href="Referral.topic" anchor="generate_referral_link">Referral doc.</a>
+
+            <tabs>
+                <tab title="Unity" id="unity-3">
+                    <code-block lang="C#">
+                        sdk.ShareURL("https://my.url", "optional message");
+                    </code-block>
+                </tab>
+                <tab title="Typescript" id="typescript-3">
+                    <code-block lang="typescript">
+                    sdk.tma.share('https://my.url', 'optional message');
+                    </code-block>
+                </tab>
+            </tabs>
+        </chapter>
+    </chapter>
     <chapter title="Server time" id="server-time">
         <tabs>
             <tab title="Unity" id="unity-1">

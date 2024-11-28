@@ -201,8 +201,13 @@
             </tabs>
         </chapter>
         <chapter title="Around user" id="around-user">
-            You can also query a leadeboard to get a portion of it centered around the user.
+            You can also query a leaderboard to get a portion of it centered around the user.
             It works the same way as <a anchor="fetch"/> the only difference being you cannot paginate the results.
+            <p>
+                Depending on the user's position, his entry will not always be in the middle of the returned list.
+                For example, if he's first or last, he may appear at either the beginning or the end.
+            </p>
+            <p>If the user is not ranked yet, the top leaderboard is returned instead.</p>
 
             <tabs>
                 <tab title="Unity" id="unity-4">

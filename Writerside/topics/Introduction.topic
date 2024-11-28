@@ -21,6 +21,7 @@
             <a href="Analytics.topic" summary="Track your games performance and player behavior."/>
             <a href="In-app-Purchases.topic" summary="Monetize your games with in-app purchases in telegram's Stars."/>
             <a href="Ads.topic" summary="Monetize your games with rewarded ads and interstitials."/>
+            <a href="Airdrop.topic" summary="Manage airdrops features, like changing or viewing wallet address."/>
             <a href="MiniApp.topic" summary="Access Telegram Mini App features, like Haptic feedbacks."/>
         </primary>
         <misc>

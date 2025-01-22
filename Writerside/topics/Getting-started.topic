@@ -88,7 +88,7 @@
                      <script type="module">
 
                      // static import
-                     import {p00lsGamesSdk} from 'https://unpkg.com/@p00ls-games/sdk@3/index.es.js';
+                     import {p00lsGamesSdk} from 'https://unpkg.com/@p00ls-games/sdk@4/index.es.js';
                      // or dynamic import
                      const {p00lsGamesSdk} = await import(`https://unpkg.com/@p00ls-games/sdk@${sdkVersion}/index.es.js`);
                      </script>
